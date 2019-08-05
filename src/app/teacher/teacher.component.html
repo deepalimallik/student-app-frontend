@@ -1,0 +1,46 @@
+<form [formGroup]="teacherForm" (ngSubmit)="onSubmit()">
+
+    <h1>Add Teacher Form</h1>
+
+    {{teacherForm |json}}
+
+
+  <div>
+    <label>
+      Name:
+      <input type="text" formControlName="name" required>
+    </label>
+  </div>
+
+
+      <div>
+        <label>
+          Address:
+          <input type="text" formControlName="address">
+        </label>
+      </div>
+
+      <div>
+        <label>
+          Email:
+          <input type="email" formControlName="email">
+        </label>
+      </div>
+
+      <div>
+        <label>
+          Contact Number:
+          <input type="tel" formControlName="contactNumber">
+        </label>
+      </div>
+
+
+
+      <button type="submit" [disabled]="!teacherForm.valid">Submit</button>
+
+</form>
+
+
+<p>
+    Form Status: {{ teacherForm.status }}
+  </p>

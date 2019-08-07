@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, Form, FormGroup } from '@angular/forms';
-
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import {TeacherService} from './teacher.service';
 
 @Component({
   selector: 'app-teacher',
@@ -8,27 +8,37 @@ import { FormBuilder, Validators, Form, FormGroup } from '@angular/forms';
   styleUrls: ['./teacher.component.css']
 })
 export class TeacherComponent implements OnInit {
-  teacherForm: FormGroup;
 
-
-  constructor(private fb: FormBuilder) { }
-
-  ngOnInit() {
-
-
-  this.teacherForm = this.fb.group({
-    name: ['', Validators.required],
+  teacherRegistrationForm = this.fb.group({
+    teacherId: ['1'],
+    teacherName: ['',  [Validators.required, Validators.minLength(5)]],
     address: [''],
     email: [''],
-    contactNumber: [''],
-    // course: [''],
+    phoneNumber: [''],
+    alternateEmails: this.fb.array([])
+
   });
 
+  constructor(private fb: FormBuilder, private teacherService: TeacherService) {}
+  get TeacherName() {
+   return this.teacherRegistrationForm.get('teacherName');
   }
+
+  get alternateEmails() {
+    return this.teacherRegistrationForm.get('alternateEmails') as FormArray;
+  }
+
+  addAlternateEmail() {
+    this.alternateEmails.push(this.fb.control(''));
+  }
+  ngOnInit() {}
 
   onSubmit() {
-    console.warn(this.teacherForm.value);
+    console.log(this.teacherRegistrationForm.value);
+    this.teacherService.addTeacher(this.teacherRegistrationForm.value)
+      .subscribe(
+          response => console.log('Success!', response),
+        error => console.log('Error!', error)
+      );
   }
-
-
 }

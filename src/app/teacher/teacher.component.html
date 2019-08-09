@@ -39,5 +39,19 @@
     <button [disabled]='!teacherRegistrationForm.valid' class="btn btn-primary" type="submit">Add Teacher</button>
 
   </form>
+ <br/>
+  <button [disabled]='!teacherRegistrationForm.valid' class="btn btn-primary" type="submit">Update Teacher</button>
 
 </div>
+
+<div>
+  <tr *ngFor="let teacher of teachers; let i = index">
+    <td>{{teacher.teacherId}}</td>
+    <td>{{teacher.teacherName}}</td>
+    <td>{{teacher.address}}</td>
+    <td>{{teacher.email}}</td>
+    <td>{{teacher.phoneNumber}}</td>
+  </tr>
+</div>
+
+
